@@ -1,0 +1,55 @@
+# ################################################################################
+# * Owner:Erik Nor 
+
+# * Usage:
+# *   These are all the grants that are created in Databricks
+# *   Could potentially be used to build out the complete lakehouse including 
+# *     catalogs and schemas plus grants
+# ################################################################################
+# 
+# Structure-
+# catalogs-list:
+#   env:
+#     catalog:
+#       <catalog_attributes>
+#       grant-list:
+#         principal: [<permisions>]
+#       schema-list:
+#         <schema_attributes>
+#         schema:
+#           grant-list:
+#             principal: [<permisions>]
+#         volume-list:
+#           <volume_attributes>
+#           volume:
+#             grant-list:
+#               principal: [<permisions>]
+#         
+#
+catalogs-list:
+  dev:
+    dev_example_catalog:
+      storage_root: 's3://${local.bucket}/${var.env}_storage'
+      # provider_name: ''
+      # share_name: ''
+      # connection_name: ''
+      owner: data.databricks_service_principal.XXXXX.application_id
+      isolation_mode: 'ISOLATED' #ISOLATED|OPEN
+      # enable_predictive_optimization: '' #ENABLE|DISABLE|INHERIT
+      comment: 'this catalog is managed and provisioned by Terraform'
+      properties:
+        purpose: "example catalog creation" 
+      #   prop1: "val1"
+      #   prop2: "val2"
+      # options: ''
+      grant-list:
+        Team A: ["ALL_PRIVILEGES"]
+      schema-list:
+        # example_schema:
+          # storage_root: ''
+          # owner: ''
+          # comment: 'This schema is managed by terraform'
+          # properties: 
+          #   purpose: 'Testing'
+          # enable_predictive_optimization: '' #ENABLE|DISABLE|INHERIT
+          # grant-list:

@@ -5,6 +5,7 @@
 # *   These are all the grants that are created in Databricks
 # *   Could potentially be used to build out the complete lakehouse including 
 # *     catalogs and schemas plus grants
+# *   This is a yaml file that is used to create the databricks catalog
 # ################################################################################
 # 
 # Structure-

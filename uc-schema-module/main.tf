@@ -1,3 +1,25 @@
+
+/*
+################################################################################
+* Owner:  Erik Nor
+
+* Usage:
+*   These are all the schemas that are created in Databricks
+*   https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/schema
+*
+*   The following arguments are currently supported:
+*   
+*     name - Name of Schema relative to parent catalog. Change forces creation of a new resource.
+*     catalog_name - Name of parent catalog. Change forces creation of a new resource.
+*     storage_root - (Optional) Managed location of the schema. Location in cloud storage where data for managed tables will be stored. If not specified, the location will default to the catalog root location. Change forces creation of a new resource.
+*     owner - (Optional) Username/groupname/sp application_id of the schema owner.
+*     comment - (Optional) User-supplied free-form text.
+*     properties - (Optional) Extensible Schema properties.
+*     enable_predictive_optimization - (Optional) Whether predictive optimization should be enabled for this object and objects under it. Can be ENABLE, DISABLE or INHERIT
+*     force_destroy - (Optional) Delete schema regardless of its contents.
+################################################################################
+*/
+
 resource "databricks_schema" "new_schema" {
   for_each      = var.schema_list == null ? {} : var.schema_list
   catalog_name  = var.catalog_name
@@ -7,6 +29,7 @@ resource "databricks_schema" "new_schema" {
   comment       = try(each.value.comment, null)
   properties    = try(each.value.properties, null)
   force_destroy = try(each.value.force_destroy, null)
+  enable_predictive_optimization = try(each.value.enable_predictive_optimization, null) 
 }
 
 
@@ -28,16 +51,7 @@ module "databricks_volumes" {
   volume_list  = try(each.value.schema-list, {})
 
 }
-# data "databricks_schema" "new_schema" {
-#   for_each = var.schema_list == null ? {} : var.schema_list
-#   #   catalog_name  = var.catalog_name
-#   #   storage_root  = try(each.value.storage_root, null)
-#   #   owner         = try(each.value.owner, null)
-#   name = "${var.catalog_name}.${each.key}"
-#   #   comment       = try(each.value.comment, null)
-#   #   properties    = try(each.value.properties, null)
 
-# }
 
 output "databricks_schemas" {
   value = tomap({

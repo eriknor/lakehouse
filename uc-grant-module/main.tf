@@ -1,3 +1,16 @@
+
+/*
+################################################################################
+* Owner:  Erik Nor
+
+* Usage:
+*   https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/grants
+*
+*   This module is used to grant permissions to the service principals that need access to the catalog, schema, or volume
+*
+################################################################################
+*/
+
 resource "databricks_grants" "catalog_grants" {
   count   = var.grant_list == null ? 0 : var.catalog_name == null ? 0 : length(var.grant_list) > 0 ? 1 : 0
   catalog = var.catalog_name

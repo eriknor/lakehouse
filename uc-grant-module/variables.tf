@@ -19,3 +19,8 @@ variable "schema_id" {
   type    = string
   default = null
 }
+
+variable "volume_id" {
+  type    = string
+  default = null
+}

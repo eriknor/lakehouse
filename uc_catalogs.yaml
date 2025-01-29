@@ -53,3 +53,9 @@ catalogs-list:
           #   purpose: 'Testing'
           # enable_predictive_optimization: '' #ENABLE|DISABLE|INHERIT
           # grant-list:
+          # volume-list:
+          #   example_volume:
+          #     volume_type: ''
+          #     storage_location: ''
+          #     owner: ''
+          #     comment: ''

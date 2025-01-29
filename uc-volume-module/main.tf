@@ -1,46 +1,27 @@
-resource "databricks_schema" "new_schema" {
+resource "databricks_volume" "new_volume" {
   for_each      = var.schema_list == null ? {} : var.schema_list
   catalog_name  = var.catalog_name
-  storage_root  = try(each.value.storage_root, null)
+  schema_name   = var.schema_name
+  volume_type   = each.value.volume_type
+  storage_location  = try(each.value.storage_location, null)
   owner         = try(each.value.owner, null)
   name          = each.key
   comment       = try(each.value.comment, null)
-  properties    = try(each.value.properties, null)
-  force_destroy = try(each.value.force_destroy, null)
 }
 
 
 module "databricks_grants" {
   # depends_on = [time_sleep.wait-for-schema-creation]
-  for_each   = var.schema_list == null ? {} : var.schema_list
+  for_each   = var.volume_list == null ? {} : var.volume_list
   source     = "../uc-grant-module"
-  schema_id  = "${var.catalog_name}.${each.key}"
+  volume_id = "${var.catalog_name}.${var.schema_name}.${each.key}"
   grant_list = try(each.value.grant-list, {})
 }
 
 
-module "databricks_volumes" {
-  # depends_on   = [time_sleep.wait-for-catalog-creation]
-  for_each     = var.schema_list == null ? {} : var.schema_list
-  source       = "../uc-volume-module"
-  catalog_name = var.catalog_name
-  schema_name  = each.key
-  volume_list  = try(each.value.schema-list, {})
 
-}
-# data "databricks_schema" "new_schema" {
-#   for_each = var.schema_list == null ? {} : var.schema_list
-#   #   catalog_name  = var.catalog_name
-#   #   storage_root  = try(each.value.storage_root, null)
-#   #   owner         = try(each.value.owner, null)
-#   name = "${var.catalog_name}.${each.key}"
-#   #   comment       = try(each.value.comment, null)
-#   #   properties    = try(each.value.properties, null)
-
-# }
-
-output "databricks_schemas" {
+output "databricks_volumes" {
   value = tomap({
-    for k, new_schema in databricks_schema.new_schema : k => new_schema
+    for k, new_volume in databricks_volume.new_volume : k => new_volume
   })
 }

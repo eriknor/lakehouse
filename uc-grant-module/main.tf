@@ -27,4 +27,19 @@ resource "databricks_grants" "schema_grants" {
 }
 
 
+resource "databricks_grants" "volume_grants" {
+  count  = var.grant_list == null ? 0 : var.volume_id == null ? 0 : length(var.grant_list) > 0 ? 1 : 0
+  volume = var.volume_id
+
+  dynamic "grant" {
+    for_each = var.grant_list
+    content {
+      principal  = grant.key
+      privileges = toset([for i in grant.value : i])
+
+    }
+  }
+}
+
+
 

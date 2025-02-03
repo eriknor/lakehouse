@@ -4,7 +4,7 @@ variable "volume_list" {
   #nullable = false
 }
 variable "schema_name" {
-  type = string  
+  type = string
 }
 variable "catalog_name" {
   type = string

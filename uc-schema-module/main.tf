@@ -21,15 +21,15 @@
 */
 
 resource "databricks_schema" "new_schema" {
-  for_each      = var.schema_list == null ? {} : var.schema_list
-  catalog_name  = var.catalog_name
-  storage_root  = try(each.value.storage_root, null)
-  owner         = try(each.value.owner, null)
-  name          = each.key
-  comment       = try(each.value.comment, null)
-  properties    = try(each.value.properties, null)
-  force_destroy = try(each.value.force_destroy, null)
-  enable_predictive_optimization = try(each.value.enable_predictive_optimization, null) 
+  for_each                       = var.schema_list == null ? {} : var.schema_list
+  catalog_name                   = var.catalog_name
+  storage_root                   = try(each.value.storage_root, null)
+  owner                          = try(each.value.owner, null)
+  name                           = each.key
+  comment                        = try(each.value.comment, null)
+  properties                     = try(each.value.properties, null)
+  force_destroy                  = try(each.value.force_destroy, null)
+  enable_predictive_optimization = try(each.value.enable_predictive_optimization, null)
 }
 
 

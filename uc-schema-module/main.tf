@@ -39,6 +39,7 @@ module "databricks_grants" {
   source     = "../uc-grant-module"
   schema_id  = "${var.catalog_name}.${each.key}"
   grant_list = try(each.value.grant-list, {})
+  depends_on = [databricks_schema.new_schema]
 }
 
 
@@ -48,8 +49,9 @@ module "databricks_volumes" {
   source       = "../uc-volume-module"
   catalog_name = var.catalog_name
   schema_name  = each.key
-  volume_list  = try(each.value.schema-list, {})
-
+  # volume_list  = try(each.value.volume-list, {})
+  volume_list = each.value.volume-list
+  depends_on  = [databricks_schema.new_schema]
 }
 
 

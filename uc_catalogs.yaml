@@ -34,7 +34,7 @@ catalogs-list:
       # provider_name: ''
       # share_name: ''
       # connection_name: ''
-      owner: data.databricks_service_principal.XXXXX.application_id
+      owner: erik.nor@databricks.com
       isolation_mode: 'ISOLATED' #ISOLATED|OPEN
       # enable_predictive_optimization: '' #ENABLE|DISABLE|INHERIT
       comment: 'this catalog is managed and provisioned by Terraform'
@@ -46,20 +46,23 @@ catalogs-list:
       grant-list:
         Team A: ["ALL_PRIVILEGES"]
       schema-list:
-        # example_schema:
-          # storage_root: ''
-          # owner: ''
-          # comment: 'This schema is managed by terraform'
-          # properties: 
-          #   purpose: 'Testing'
+        example_schema:
+          storage_root: ''
+          owner: ''
+          comment: 'This schema is managed by terraform'
+          properties: 
+            purpose: 'Testing'
           # enable_predictive_optimization: '' #ENABLE|DISABLE|INHERIT
-          # grant-list:
-          # volume-list:
-          #   example_volume:
-          #     volume_type: ''
-          #     storage_location: ''
-          #     owner: ''
-          #     comment: ''
+          grant-list:
+            Team B: ["ALL_PRIVILEGES"]
+          volume-list:
+            example_volume:
+              volume_type: 'EXTERNAL'
+              storage_location: 's3://owekkeof'
+              owner: ''
+              comment: 'This schema is managed by terraform'
+              grant-list:
+                Team C: ["ALL_PRIVILEGES"]
   npe:
     npe_example_catalog:
       storage_root: 's3://${local.bucket}/${var.env}_storage'

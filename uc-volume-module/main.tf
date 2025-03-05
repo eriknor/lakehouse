@@ -36,6 +36,8 @@ module "databricks_grants" {
   source     = "../uc-grant-module"
   volume_id  = "${var.catalog_name}.${var.schema_name}.${each.key}"
   grant_list = try(each.value.grant-list, {})
+  depends_on = [databricks_volume.new_volume]
+
 }
 
 

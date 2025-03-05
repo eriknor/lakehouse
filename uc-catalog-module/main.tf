@@ -47,6 +47,7 @@ module "databricks_grants" {
   source       = "../uc-grant-module"
   catalog_name = each.key
   grant_list   = try(each.value.grant-list, {})
+  depends_on   = [databricks_catalog.new_catalog]
 }
 
 
@@ -56,6 +57,7 @@ module "databricks_schemas" {
   source       = "../uc-schema-module"
   catalog_name = each.key
   schema_list  = try(each.value.schema-list, {})
+  depends_on   = [databricks_catalog.new_catalog]
 
 }
 

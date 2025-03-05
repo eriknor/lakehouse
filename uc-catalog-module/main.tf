@@ -28,7 +28,7 @@
 resource "databricks_catalog" "new_catalog" {
   for_each                       = var.catalog_list == null ? {} : var.catalog_list
   name                           = each.key
-  storage_root                   = try(each.value.storage_root, null)
+  storage_root                   = each.value.storage_root
   provider_name                  = try(each.value.provider_name, null)
   share_name                     = try(each.value.share_name, null)
   owner                          = try(each.value.owner, null)

@@ -12,7 +12,7 @@ terraform {
       source = "databricks/databricks"
     }
   }
-  required_version = ">= 1.9.0"
+  #required_version = ">= 1.9.0"
 }
 
 # Default provider - used to deploy virtually everything in our workspace

@@ -9,6 +9,7 @@ variable "catalog_list" {
     enable_predictive_optimization = optional(string)
     comment                        = optional(string)
     properties                     = optional(map(string))
+    force_destroy                  = optional(string)
     # options                       = optional(string)
     # connection_name               = optional(string)
     grant-list = map(list(string))

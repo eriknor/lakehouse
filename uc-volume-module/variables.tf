@@ -8,7 +8,7 @@ variable "volume_list" {
   }))
   default = {}
   #nullable = false
-  description = "A map of objects which represent Schemas beneath a Catalog including all of the required settings to create."
+  description = "A map of objects which represent Volumes beneath a Schemas including all of the required settings to create."
   validation {
     condition = alltrue([
       for v in values(var.volume_list) : (
